@@ -1,0 +1,229 @@
+# Installation manuel
+
+Guide d'installation de pterodactyl (non officiel)
+
+## Dépendances
+
+{% hint style="danger" %}
+**OS supportés:**\
+Ubuntu 20.04, 22.04, 24.04\
+Debian 10, 11, 12
+{% endhint %}
+
+Avant d'installer pterodactyl, mettez à jour le VPS :
+
+```bash
+apt update && apt upgrade -y
+```
+
+Installation de sudo et curl :
+
+```bash
+apt install sudo curl
+```
+
+## Installation de Pterodactyl
+
+### Installation du panel
+
+{% hint style="warning" %}
+Il n'est pas recommandé d'utiliser le script d'installation pour une utilisation publique, pour une utilisation publique il vaut mieux suivre [**la documentation officielle**](https://pterodactyl.io/project/introduction.html).\
+Le script est recommandé pour une utilisation privée.
+{% endhint %}
+
+Lancez le script d'installation:
+
+```bash
+bash <(curl -s https://pterodactyl-installer.se)
+```
+
+```bash
+* Pterodactyl installation script @ v0.4.0
+* 
+* Copyright (C) 2018 - 2021, Vilhelm Prytz, <vilhelm@prytznet.se>
+* https://github.com/vilhelmprytz/pterodactyl-installer
+* 
+* Sponsoring/Donations: https://github.com/vilhelmprytz/pterodactyl-installer?sponsor=1
+* This script is not associated with the official Pterodactyl Project.
+* 
+* What would you like to do?
+* [0] Install the panel
+* [1] Install Wings
+* [2] Install both [0] and [1] on the same machine (wings script runs after panel)
+
+* [3] Install 0.7 version of panel (unsupported, no longer maintained!)
+* [4] Install 0.6 version of daemon (works with panel 0.7, no longer maintained!)
+* [5] Install both [3] and [4] on the same machine (daemon script runs after panel)
+
+* [6] Install panel with canary version of the script (the versions that lives in master, may be broken!)
+* [7] Install Wings with canary version of the script (the versions that lives in master, may be broken!)
+* [8] Install both [5] and [6] on the same machine (wings script runs after panel)
+* Input 0-8: 0
+```
+
+Nous allons commencer par l'installation du panel, pour cela tapez 0 et appuyez sur Entrée
+
+```bash
+* Would you like to install MariaDB (MySQL) server on the daemon as well? (y/N): y
+```
+
+Appuyez sur entrée en ne spécifiant rien sur les messages suivants :
+
+```bash
+* Database name (panel): 
+* Username (pterodactyl): 
+* Password (press enter to use randomly generated password): 
+```
+
+```bash
+* Select timezone [Europe/Stockholm]: Europe/Paris
+```
+
+Vous allez devoir renseigner une adresse mail **valide** pour Let's Encrypt (SSL) et Pterodactyl :
+
+```bash
+* Provide the email address that will be used to configure Let's Encrypt and Pterodactyl: exemple@exemple.fr
+```
+
+Ensuite nous allons créer un compte admin :
+
+```bash
+* Email address for the initial admin account: admin@admin.fr
+* Username for the initial admin account: admin
+* First name for the initial admin account: admin
+* Last name for the initial admin account: admin
+* Password for the initial admin account: *****
+```
+
+Renseignez votre nom de domaine ou IP de votre VPS (si vous n'avez pas de nom de domaine) :
+
+```bash
+* Set the FQDN of this panel (panel.example.com): tuto.librahost.fr
+```
+
+```bash
+* Do you want to automatically configure UFW (firewall)? (y/N): n
+```
+
+Voulez-vous un certificat SSL pour votre nom de domaine en utilisant Let's Encrypt ? :
+
+```bash
+* Do you want to automatically configure HTTPS using Let's Encrypt? (y/N): y
+* I agree that this HTTPS request is performed (y/N): y
+```
+
+Si vous n'avez pas mis de nom de domaine à l'étape précédente :
+
+```bash
+* Do you want to automatically configure HTTPS using Let's Encrypt? (y/N): N
+```
+
+Si vous n'avez pas mis de certificat : voulez-vous autoriser le trafic SSL (HTTPS) ? :
+
+```bash
+* Assume SSL or not? (y/N): 
+```
+
+Une fois tout ça fait vous pouvez lancer l'installation du panel Pterodactyl :
+
+```bash
+* Initial configuration completed. Continue with installation? (y/N): y
+```
+
+```bash
+(A)gree/(C)ancel: a
+```
+
+Fin de l'installation du panel Pterodactyl.
+
+### Installation du wings
+
+Exécutez le script d'installation :
+
+```bash
+bash <(curl -s https://pterodactyl-installer.se)
+```
+
+```bash
+* Pterodactyl installation script @ v0.4.0
+* 
+* Copyright (C) 2018 - 2021, Vilhelm Prytz, <vilhelm@prytznet.se>
+* https://github.com/vilhelmprytz/pterodactyl-installer
+* 
+* Sponsoring/Donations: https://github.com/vilhelmprytz/pterodactyl-installer?sponsor=1
+* This script is not associated with the official Pterodactyl Project.
+* 
+* What would you like to do?
+* [0] Install the panel
+* [1] Install Wings
+* [2] Install both [0] and [1] on the same machine (wings script runs after panel)
+
+* [3] Install 0.7 version of panel (unsupported, no longer maintained!)
+* [4] Install 0.6 version of daemon (works with panel 0.7, no longer maintained!)
+* [5] Install both [3] and [4] on the same machine (daemon script runs after panel)
+
+* [6] Install panel with canary version of the script (the versions that lives in master, may be broken!)
+* [7] Install Wings with canary version of the script (the versions that lives in master, may be broken!)
+* [8] Install both [5] and [6] on the same machine (wings script runs after panel)
+* Input 0-8: 1
+```
+
+Nous n'allons pas installer MariaDB car il se trouve déjà sur le serveur grâce à l'installation du panel.
+
+```bash
+* Would you like to install MariaDB (MySQL) server on the daemon as well? (y/N): n
+```
+
+```bash
+* Do you want to automatically configure UFW (firewall)? (y/N): n
+```
+
+{% tabs %}
+{% tab title="Avec nom de domaine" %}
+
+```bash
+* Do you want to automatically configure HTTPS using Let's Encrypt? (y/N): y
+* Set the FQDN to use for Let's Encrypt (node.example.com): node.librahost.fr
+* I agree that this HTTPS request is performed (y/N): y
+* Enter email address for Let's Encrypt: exemple@exemple.fr
+* Proceed with installation? (y/N): y
+```
+
+{% endtab %}
+
+{% tab title="Sans nom de domaine" %}
+
+```bash
+* Do you want to automatically configure HTTPS using Let's Encrypt? (y/N): n
+* Proceed with installation? (y/N): y
+```
+
+{% endtab %}
+{% endtabs %}
+
+Maintenant que les deux parties sont installées, il reste à les relier ensemble. Pour cela, il vous suffit de vous rendre sur le panel (via l'adresse ip ou le nom de domaine que vous avez configuré, dans notre cas ça sera tuto.librahost.fr).<br>
+
+![](https://2736149216-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-MXhu37A41ugEtj2tEgx%2Fuploads%2FLHmkGS8MFri1hynBifq2%2Fimage.png?alt=media\&token=feb77fb7-c044-44cc-869e-b8dd737e6acb)
+
+Maintenant, il vous faut aller dans "Locations" et créer une location. Le nom n'est pas important.\
+\
+Rendez-vous ensuite dans "Nodes" et cliquez sur "Create New".
+
+![](https://2736149216-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F-MXhu37A41ugEtj2tEgx%2Fuploads%2FYi4sa462k1Je4T4sh64R%2Fimage.png?alt=media\&token=ef013eb2-a624-47a0-b49c-8c39b342b06a)
+
+Vous avez juste à donner un nom à votre Node dans "Name", rajoutez l'IP du node dans "FQDN", mettez l'IP et cocher "Use HTTP Connection" si vous n'avez pas configuré de SSL (HTTPS) sinon vous devez mettre votre domaine en cochant "Use SSL Connection".\
+\
+Ensuite renseignez "Total Memory" (RAM) selon les performances de votre VPS (1024MB = 1Go) ainsi que votre "Total Disk Space" (Stockage) selon ce que vous avez sur votre VPS.\
+\
+Vous pouvez mettre une "Over-Allocation" cela vous permettra d'allouer plus que vous avez renseigné, celle-ci est en pourcentage si vous ne voulez pas vous avez juste à mettre 0.<br>
+
+Une fois les informations remplies, cliquez sur "Create Node" puis allez dans "Configuration", et cliquez sur "Generate Token"  et copiez la commande. Retournez sur votre SSH en faisant clic droit pour coller et exécutez celle-ci.
+
+Faites ensuite les commandes suivantes :
+
+```bash
+systemctl enable --now wings
+systemctl start wings
+```
+
+Vous avez maintenant terminé l'installation du Pterodactyl !
